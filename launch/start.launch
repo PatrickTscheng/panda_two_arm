@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+
+  <arg name="debug" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+
+  <!-- This argument dictates whether gazebo should be launched in this file -->
+  <arg name="load_gazebo" default="true"/>
+
+  <!-- We resume the logic in empty_world.launch, changing the name of the world to be launched -->
+  <include if="$(arg load_gazebo)" file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find panda_gazebo)/worlds/panda.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+
+  <!-- send robot urdf to param server -->
+    <!-- <param name="tf_prefix" value="panda1_tf" />
+    <include file="$(find panda_two_arm)/launch/onearm.launch"> -->
+
+      <!-- configuration -->
+    
+      <!-- <arg name="robot_name" value="panda1" />
+      <arg name="init_pose" value="-x 0 -y 0.5 -z 0"/>
+
+      <arg name="gui" value="$(arg gui)" />
+      <arg name="ns" value="$(arg ns)" />
+      <arg name="load_gripper" value="$(arg load_gripper)" />
+      <arg name="load_gazebo" value="$(arg load_gazebo)" />
+      <arg name="initial_joint_states" value="$(arg initial_joint_states)" />
+      <arg name="use_custom_action_servers" value="$(arg use_custom_action_servers)"/>
+      <arg name="start_moveit" value="$(arg start_moveit)" />
+      <arg name="load_demo_planning_scene" value="$(arg load_demo_planning_scene)" />
+      <arg name="force_neutral_pose" value="$(arg force_neutral_pose)" />
+  </include> -->
+
+  <!-- ns 1 -->
+
+  <group ns="panda">
+    <!-- <param name="tf_prefix" value="panda1_tf" /> -->
+    <include file="$(find panda_two_arm)/launch/onearm.launch">
+
+      <!-- configuration -->
+    
+      <arg name="robot_name" value="panda" />
+      <arg name="init_pose" value="-x 0 -y 0.5 -z 0"/>
+
+      <!-- <arg name="ns" value="$(arg ns)" /> -->
+      <arg name="load_gripper" value="true" />
+      <!-- <arg name="initial_joint_states" value="$(arg initial_joint_states)" />
+      <arg name="use_custom_action_servers" value="$(arg use_custom_action_servers)"/>
+      <arg name="start_moveit" value="$(arg start_moveit)" />
+      <arg name="load_demo_planning_scene" value="$(arg load_demo_planning_scene)" />
+      <arg name="force_neutral_pose" value="$(arg force_neutral_pose)" /> -->
+   </include>
+  </group>
+
+<!-- <group ns="panda2">
+    <param name="tf_prefix" value="panda1_tf" />
+      <arg name="robot_name" value="panda2" />
+      <arg name="init_pose" value="-x 0 -y 1 -z 0"/>
+ <node name="spawn_gazebo_model1" pkg="gazebo_ros" type="spawn_model" args="$(arg init_pose) -param robot_description -urdf -model $(arg robot_name) $(arg initial_joint_states)"/>
+</group>  -->
+
+
+</launch>
